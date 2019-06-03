@@ -68,6 +68,13 @@ export default {
                 { key: '/app/extension/queryParams', title: '问号形式参数', component: 'QueryParams', query: '?param1=1&param2=2' },
             ],
         },
+        {
+            key: '/app/matting', title: '智能抠图', icon: 'bars',
+            subs: [
+                { key: '/app/matting/semi-automatic', title: 'AI辅助抠图', component: 'SemiAutomaticMatting'},
+                { key: '/app/matting/full-automatic', title: 'AI人像抠图', component: ''}
+            ],
+        }
     ],
     others: [] // 非菜单相关路由
 }
