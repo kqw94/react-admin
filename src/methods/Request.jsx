@@ -64,7 +64,7 @@ export function upload(url, data) {
 			type: 'post',
 			processData: false,
 			contentType: false,
-			dataType: 'json',
+			//dataType: 'json',
 			success: function (result) {
 				resolve(result);
 			},

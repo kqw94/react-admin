@@ -27,9 +27,11 @@ class FilesDemo extends React.Component {
 
     onClick = () => {
         console.log('触发点击事件')
-        upload(HOST + '/mrcnn', {
-            img: this.state.files[0]
-        }).then(function (data) {
+        //console.log('file', this.state.files[0])
+        let formData = new FormData()
+        formData.append("img", this.state.files[0]);
+        console.log('formData', formData)
+        upload(HOST + '/mrcnn',formData).then(function (data) {
             if (data.success){
                 console.log(data)
             }else{
