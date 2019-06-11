@@ -1,5 +1,7 @@
 import React from 'react'
 import Files from 'react-files'
+import {Icon, Button, Row, Col} from 'antd'
+import _ from 'underscore'
 
 class FilesDemo extends React.Component {
 
@@ -21,7 +23,10 @@ class FilesDemo extends React.Component {
         console.log('error code' + error.code + ': ' + error.message)
     }
 
+
     render() {
+        let self = this
+        let button = _.isEmpty(self.state.files) ? []: (<Button type="primary">分割</Button>)
         
         return (
             
@@ -37,16 +42,18 @@ class FilesDemo extends React.Component {
                     minFileSize={0}
                     clickable
                     >
-                        Drop files here or click to upload
+                        
+                        <Icon type="plus-square" theme="twoTone" style={{marginLeft: "36%", fontSize:100}}/>
                     </Files>
-                    <div>
-                    {
-					this.state.files.map((file) => {
-						return (
-                                <img src={file.preview.url} alt="can't show" />
-						);
-					})}
-                    </div>
+                    <Col className="gutter-row" md={12}>
+                        {
+                        this.state.files.map((file) => {
+                            return (
+                                    <img src={file.preview.url} alt="can't show" width="200%"/>
+                            );
+                        })}
+                        <div>{button}</div>
+                    </Col>
                 </div>
 
             
