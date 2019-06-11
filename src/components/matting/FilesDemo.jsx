@@ -2,6 +2,8 @@ import React from 'react'
 import Files from 'react-files'
 import {Icon, Button, Row, Col} from 'antd'
 import _ from 'underscore'
+import {get, post, upload} from '../../methods/Request'
+import {HOST} from '../../constants/Constant'
 
 class FilesDemo extends React.Component {
 
@@ -23,10 +25,23 @@ class FilesDemo extends React.Component {
         console.log('error code' + error.code + ': ' + error.message)
     }
 
+    onClick = () => {
+        console.log('触发点击事件')
+        upload(HOST + '/mrcnn', {
+            img: this.state.files[0]
+        }).then(function (data) {
+            if (data.success){
+                console.log(data)
+            }else{
+                console.log('发生错误')
+            }
+        })
+    }
+
 
     render() {
         let self = this
-        let button = _.isEmpty(self.state.files) ? []: (<Button type="primary">分割</Button>)
+        let button = _.isEmpty(self.state.files) ? []: (<Button type="primary" onClick={this.onClick}>分割</Button>)
         
         return (
             
