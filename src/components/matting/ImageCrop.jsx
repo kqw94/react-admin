@@ -41,12 +41,16 @@ class ImageCrop extends PureComponent {
 
   async makeClientCrop(crop) {
     if (this.imageRef && crop.width && crop.height) {
-      const croppedImageUrl = await this.getCroppedImg(
+      const res = await this.getCroppedImg(
         this.imageRef,
         crop,
         "newFile.jpeg"
       );
-      this.setState({ croppedImageUrl });
+      const croppedImageUrl = res[0]
+      const croppedImageFile = res[1]
+      console.log('croppedImageFile', croppedImageFile)
+      this.props.callback(croppedImageFile)
+      this.setState({ croppedImageUrl});
     }
   }
 
@@ -80,7 +84,11 @@ class ImageCrop extends PureComponent {
         blob.name = fileName;
         window.URL.revokeObjectURL(this.fileUrl);
         this.fileUrl = window.URL.createObjectURL(blob);
-        resolve(this.fileUrl);
+        this.file = new File([blob], fileName, {type:"image/jpeg"})
+        this.res = []
+        this.res.push(this.fileUrl)
+        this.res.push(this.file)
+        resolve(this.res);
       }, "image/jpeg");
     });
   }

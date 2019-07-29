@@ -4,6 +4,8 @@
 import React from 'react';
 import { Row, Col, Card, Menu, Button, Icon, Dropdown, Drawer, Divider } from 'antd';
 import ImageCrop from './ImageCrop'
+import {get, post, upload} from '../../methods/Request'
+import {HOST} from '../../constants/Constant'
 
 class AutoMatting extends React.Component {
 
@@ -11,7 +13,8 @@ class AutoMatting extends React.Component {
         super(props)
         this.state = {
             button : '请选取实例',
-            visible: false
+            visible: false,
+            img: ''
         }
     }
 
@@ -35,11 +38,30 @@ class AutoMatting extends React.Component {
         })
     }
 
-    onMattingClick = () => {
+    onMatteChange = (img) => {
         this.setState({
-            visible: false
+            img: img
+        })
+        console.log('img', this.state.img)
+    }
+
+    onMattingClick = () => {
+        console.log('触发点击事件')
+        //console.log('file', this.state.files[0])
+        let formData = new FormData()
+        formData.append("img", this.state.img);
+        console.log('formData', formData)
+        upload(HOST + '/remove_bg', formData).then(function (data) {
+            if (data.success){
+                console.log(data)
+            }else{
+                console.log('发生错误')
+            }
         })
     }
+
+
+    
 
     
 
@@ -55,7 +77,7 @@ class AutoMatting extends React.Component {
         );
         return(
             <div className="gutter-example">
-                <ImageCrop />
+                <ImageCrop callback={this.onMatteChange}/>
                 <Button type="primary" onClick={this.showDrawer}>打开工具箱</Button>
                 <Drawer
                     title="抠图工具箱"
@@ -63,12 +85,11 @@ class AutoMatting extends React.Component {
                     closable={false}
                     onClose={this.onClose}
                     visible={this.state.visible}
-                    
                     width="300"
                 >
                     <a href='https://www.baidu.com' style={{fontSize:20, marginLeft:"45%"}}>识别</a>
                     <Divider />
-                    <a href='https://www.baidu.com' style={{fontSize:20, marginLeft:"45%"}}>抠图</a>
+                    <a onClick={this.onMattingClick} style={{fontSize:20, marginLeft:"45%"}}>抠图</a>
                     <Divider />
                     <a href='https://www.baidu.com' style={{fontSize:20, marginLeft:"45%"}}>后处理</a>
                     <Divider />
