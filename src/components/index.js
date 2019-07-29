@@ -28,6 +28,7 @@ import Cssmodule from './cssmodule';
 import MapUi from './ui/map';
 import QueryParams from './extension/QueryParams';
 import SemiAutomaticMatting from './matting/SemiAutomaticMatting'
+import AutoMatting from './matting/AutoMatting'
 
 const WysiwygBundle = Loadable({ // 按需加载富文本配置
     loader: () => import('./ui/Wysiwyg'),
@@ -39,5 +40,5 @@ export default {
     Echarts, Recharts, Icons, Buttons, Spins, Modals, Notifications,
     Tabs, Banners, Drags, Dashboard, Gallery, BasicAnimations,
     ExampleAnimations, AuthBasic, RouterEnter, WysiwygBundle,
-    Cssmodule, MapUi, QueryParams, SemiAutomaticMatting
+    Cssmodule, MapUi, QueryParams, SemiAutomaticMatting, AutoMatting
 }
